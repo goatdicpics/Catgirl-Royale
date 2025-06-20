@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Catgirl Royale - Prototype</title>
+  <title>Catgirl Royale</title>
+  <link rel="icon" type="image/png" href="Catgirl_Royale_Favicon.png">
   <style>
     body { margin: 0; overflow: hidden; background: #222; }
     canvas { display: block; margin: 0 auto; background: #333; }
@@ -19,9 +20,9 @@ canvas.height = 600;
 // Player properties
 const player = {
   x: canvas.width / 2,
-  y: canvas.height / 2,
+  y: canvas.height / 1,
   radius: 25,
-  speed: 4,
+  speed: 6,
   angle: 0,
   color: '#ffb6c1',
   health: 100,
@@ -31,10 +32,10 @@ const player = {
 
 // Player 2 properties
 const player2 = {
-  x: canvas.width / 4,
-  y: canvas.height / 2,
+  x: canvas.width / 2,
+  y: canvas.height / 1,
   radius: 25,
-  speed: 4,
+  speed: 6,
   angle: 0,
   color: '#4fc3f7',
   health: 100,
@@ -110,11 +111,11 @@ menuDiv.innerHTML = `
         <input id='p1name' value='Player 1' style='margin-bottom:8px;padding:4px 8px;'>
         <label style='color:#fff'>Color</label>
         <select id='p1color' style='width:90px;height:32px;font-size:16px;'>
-          <option value="#4fc3f7">Blue</option>
-          <option value="#a259e6">Violet</option>
-          <option value="#ffb6c1" selected>Pink</option>
-          <option value="#ffb347">Orange</option>
-          <option value="#7fff7f">Green</option>
+          <option value="#4fc3f7">Testicular Blue</option>
+          <option value="#a259e6">Testicular Purple</option>
+          <option value="#ffb6c1" selected>Testicular Pink</option>
+          <option value="#ffb347">Testicular Orange</option>
+          <option value="#7fff7f">Testicular Green</option>
         </select>
       </div>
       <div style='display:flex;flex-direction:column;align-items:center;'>
@@ -122,11 +123,11 @@ menuDiv.innerHTML = `
         <input id='p2name' value='Player 2' style='margin-bottom:8px;padding:4px 8px;'>
         <label style='color:#fff'>Color</label>
         <select id='p2color' style='width:90px;height:32px;font-size:16px;'>
-          <option value="#4fc3f7" selected>Blue</option>
-          <option value="#a259e6">Violet</option>
-          <option value="#ffb6c1">Pink</option>
-          <option value="#ffb347">Orange</option>
-          <option value="#7fff7f">Green</option>
+          <option value="#4fc3f7" selected>Testicular Blue</option>
+          <option value="#a259e6">Testicular Purple</option>
+          <option value="#ffb6c1">Testicular Pink</option>
+          <option value="#ffb347">Testicular Orange</option>
+          <option value="#7fff7f">Testicular Green</option>
         </select>
       </div>
     </div>
@@ -162,11 +163,25 @@ function startGameFromMenu() {
 }
 document.getElementById('playbtn').onclick = startGameFromMenu;
 
+let keySequence = '';
+const cheatCodeplayer1 = 'catgirl';
+
 // Keyboard events
 window.addEventListener('keydown', e => {
   const key = e.key.toLowerCase();
   if (!keys[key]) {
     keys[key] = true;
+
+ keySequence += key;
+  if (keySequence.length > cheatCodeplayer1.length) {
+    keySequence = keySequence.slice(-cheatCodeplayer1.length); // keep only last N letters
+  }
+  if (keySequence === cheatCodeplayer1) {
+    winner = player1Name;
+    gameState = 'gameover';
+    
+  }
+
     // Player 1 shooting (E, now supports autofire)
     if (e.code === 'KeyE' && !machineGunInterval1) {
       fireBullet(1);
@@ -189,6 +204,9 @@ window.addEventListener('keydown', e => {
     }
   }
 });
+
+
+
 window.addEventListener('keyup', e => {
   const key = e.key.toLowerCase();
   keys[key] = false;
@@ -426,7 +444,7 @@ function drawPowerups() {
     ctx.shadowBlur = 16;
     ctx.fill();
     ctx.shadowBlur = 0;
-    ctx.font = 'bold 18px Arial';
+    ctx.font = 'bold 18px Bagel Fat';
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'center';
     ctx.fillText('★', pwr.x, pwr.y + 7);
@@ -547,7 +565,7 @@ function drawHealthBars() {
   ctx.fillRect(20, 20, 200 * (player.health / player.maxHealth), 20);
   ctx.strokeStyle = '#fff';
   ctx.strokeRect(20, 20, 200, 20);
-  ctx.font = '16px Arial';
+  ctx.font = '16px Bagel Fat';
   ctx.fillStyle = getContrastYIQ(player1Color);
   ctx.fillText(player1Name, 25, 35);
   // Player 2 (top right)
@@ -557,7 +575,7 @@ function drawHealthBars() {
   ctx.fillRect(canvas.width - 220, 20, 200 * (player2.health / player2.maxHealth), 20);
   ctx.strokeStyle = '#fff';
   ctx.strokeRect(canvas.width - 220, 20, 200, 20);
-  ctx.font = '16px Arial';
+  ctx.font = '16px Bagel Fat';
   ctx.fillStyle = getContrastYIQ(player2Color);
   ctx.fillText(player2Name, canvas.width - 215, 35);
   ctx.restore();
@@ -568,17 +586,17 @@ function drawDeathScreen() {
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#fff';
-  ctx.font = '48px Arial';
+  ctx.font = '48px Bagel Fat';
   ctx.textAlign = 'center';
   ctx.fillText(`${winner} won!`, canvas.width / 2, canvas.height / 2);
   // Restart button
-  ctx.font = '28px Arial';
+  ctx.font = '28px Bagel Fat';
   ctx.fillStyle = '#fff';
   ctx.fillRect(canvas.width/2-80, canvas.height/2+40, 160, 50);
   ctx.strokeStyle = '#222';
   ctx.strokeRect(canvas.width/2-80, canvas.height/2+40, 160, 50);
   ctx.fillStyle = '#222';
-  ctx.fillText('Restart', canvas.width/2, canvas.height/2+75);
+  ctx.fillText('Rematch', canvas.width/2, canvas.height/2+75);
   ctx.restore();
 }
 
@@ -595,12 +613,52 @@ canvas.addEventListener('click', function(e) {
 // Add prettier styles at the top of the JS
 const style = document.createElement('style');
 style.textContent = `
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #232526 0%, #414345 100%); }
-  canvas { border: 4px solid #fff; border-radius: 18px; box-shadow: 0 0 32px #000a; margin-top: 32px; }
-  #game-menu input[type="text"] { border-radius: 6px; border: 1px solid #aaa; font-size: 18px; padding: 4px 10px; }
-  #game-menu input[type="color"] { border: none; background: none; }
-  #game-menu button { background: linear-gradient(90deg, #ffb6c1 0%, #4fc3f7 100%); color: #222; font-weight: bold; border: none; border-radius: 8px; font-size: 22px; padding: 10px 40px; cursor: pointer; box-shadow: 0 2px 8px #0003; transition: background 0.2s; }
-  #game-menu button:hover { background: linear-gradient(90deg, #4fc3f7 0%, #ffb6c1 100%); }
+
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
+
+body {
+  font-family: 'Bagel Fat', sans-serif;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+}
+
+canvas {
+  border: 4px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 32px #000a;
+  margin-top: 32px;
+}
+
+#game-menu input[type="text"] {
+  font-family: 'Bagel Fat', sans-serif;
+  font-size: 18px;
+  padding: 4px 10px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+}
+
+#game-menu input[type="color"] {
+  font-family: 'Bagel Fat', sans-serif;
+  border: none;
+  background: none;
+}
+
+#game-menu button {
+  font-family: 'Bagel Fat', sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0003;
+  background: linear-gradient(90deg, #ffb6c1 0%, #4fc3f7 100%);
+  transition: background 0.2s;
+}
+
+#game-menu button:hover {
+  background: linear-gradient(90deg, #4fc3f7 0%, #ffb6c1 100%);
+}
 `;
 document.head.appendChild(style);
 
